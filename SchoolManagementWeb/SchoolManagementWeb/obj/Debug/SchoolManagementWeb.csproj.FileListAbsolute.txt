@@ -1,0 +1,9 @@
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\bin\SchoolManagementWeb.dll.config
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\bin\SchoolManagementWeb.dll
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\bin\SchoolManagementWeb.pdb
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\obj\Debug\SchoolManagementWeb.csprojResolveAssemblyReference.cache
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\obj\Debug\SchoolManagementWeb.csproj.CoreCompileInputs.cache
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\obj\Debug\SchoolManagementWeb.dll
+E:\My GitHub Project\School Management Project\SchoolManagementWeb\SchoolManagementWeb\obj\Debug\SchoolManagementWeb.pdb
