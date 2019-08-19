@@ -66,6 +66,28 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\fontawesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="img\pp.jpg" />
+    <Content Include="img\schoolbanner.jpg" />
+    <Content Include="webfonts\fa-brands-400.svg" />
+    <Content Include="webfonts\fa-regular-400.svg" />
+    <Content Include="webfonts\fa-solid-900.svg" />
+    <Content Include="fonts\CAMPUS PERSONAL USE.ttf" />
+    <Content Include="fonts\SansationLight.eot" />
+    <Content Include="fonts\SansationLight.ttf" />
+    <Content Include="fonts\SansationLight.woff" />
+    <Content Include="fonts\Championship.ttf" />
+    <Content Include="fonts\Viridian College.otf" />
+    <Content Include="fonts\Viridian College.woff" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -73,10 +95,35 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="webfonts\fa-brands-400.ttf" />
+    <Content Include="webfonts\fa-brands-400.woff" />
+    <Content Include="webfonts\fa-brands-400.woff2" />
+    <Content Include="webfonts\fa-regular-400.eot" />
+    <Content Include="webfonts\fa-regular-400.ttf" />
+    <Content Include="webfonts\fa-regular-400.woff" />
+    <Content Include="webfonts\fa-regular-400.woff2" />
+    <Content Include="webfonts\fa-solid-900.eot" />
+    <Content Include="webfonts\fa-solid-900.ttf" />
+    <Content Include="webfonts\fa-solid-900.woff" />
+    <Content Include="webfonts\fa-solid-900.woff2" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\Default.html" />
+    <Content Include="app\Login.html" />
+    <Content Include="app\Login\Default2.html" />
+    <Content Include="app\Student\Profile.html" />
+    <Content Include="content\bootstrap\bootstrap.min.css" />
+    <Content Include="content\common.css" />
+    <Content Include="content\font-awesome-all.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\download.jpg" />
+    <Content Include="img\pexels-photo.jpg" />
+    <Content Include="js\bootstrap\bootstrap.min.js" />
+    <Content Include="js\fontawesome.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\login.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -87,12 +134,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\Admin\" />
-    <Folder Include="app\Login\" />
     <Folder Include="app\Register\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
     <Folder Include="Models\" />
-    <Folder Include="Script\" />
+    <Folder Include="script\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

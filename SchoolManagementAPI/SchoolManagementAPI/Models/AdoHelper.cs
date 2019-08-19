@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace SchoolManagementAPI.App_Code
+namespace SchoolManagementAPI.Models
 {
     public class AdoHelper : IDisposable
     {
@@ -15,7 +16,7 @@ namespace SchoolManagementAPI.App_Code
         protected bool _disposed = false;
 
         // Sets or returns the connection string use by all instances of this class.
-        public static string ConnectionString { get; set; }
+        public static string ConnectionString { get; set; } = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
 
         // Returns the current SqlTransaction object or null if no transaction is in effect.
         public SqlTransaction Transaction { get { return _trans; } }
