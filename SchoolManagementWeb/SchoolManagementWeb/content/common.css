@@ -197,7 +197,9 @@
     min-width: 200px;
     float: left;
     position: relative;
-    box-shadow: 0 20px 50px #333
+    box-shadow: 0 20px 50px #333;
+    min-height:600px;
+    height:100%
 }
 
     .jquery-accordion-menu .jquery-accordion-menu-footer, .jquery-accordion-menu .jquery-accordion-menu-header {
@@ -223,7 +225,8 @@
             width: 100%;
             display: block;
             float: left;
-            position: relative
+            position: relative;
+            height:100%;
         }
 
             .jquery-accordion-menu ul li a {
@@ -478,4 +481,125 @@
 
 .black.jquery-accordion-menu ul ul.submenu li:hover > a {
     border-left-color: #222
+}
+
+
+
+/*Common Menu page  */
+
+.menu {
+    background-color: #414956;
+    color: black;
+    font-family: Arial;
+    font-size: medium;
+    padding: 10px;
+    margin: 0 15px 0 15px;
+    background-image: url('../../img/schoolbanner.jpg');
+    /*background: radial-gradient(black, transparent);*/
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 45px;
+}
+
+.container1 {
+    margin: 0 auto;
+    padding: 15px;
+}
+
+body {
+    background: #f0f0f0;
+}
+
+.session {
+    font-family: fantasy;
+    font-weight: 500;
+    font-size: large;
+    color: black;
+}
+
+@font-face {
+    font-family: 'myFirstFont';
+    src: url('../../fonts/CAMPUS PERSONAL USE.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SansationLight';
+    src: local('SansationLight'), url('../../fonts/SansationLight.woff') format('woff'), url('../../fonts/SansationLight.ttf') format('truetype'), url('../../fonts/SansationLight.eot') format('embedded-opentype');
+}
+
+@font-face {
+    font-family: 'Championship';
+    src: url('../../fonts/Championship.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Viridian College';
+    src: local('SansationLight'), url('../../fonts/Viridian College.woff') format('woff'), url('../../fonts/Viridian College.otf') format('opentype');
+}
+
+.customFont1 {
+    font-family: myFirstFont;
+}
+
+/** {
+    font-family: SansationLight;
+}*/
+
+.customFont2 {
+    font-family: Championship;
+}
+
+.customFont3 {
+    font-family: Viridian College;
+    color: ghostwhite
+}
+
+.userlogin {
+    font-size: 25px;
+    float: right;
+    margin-top: -40px;
+    margin-right: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+/* For Tabbed */
+ul.tabs {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+    ul.tabs li {
+        background: black;
+        color: white;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+        ul.tabs li.current {
+            background: cadetblue;
+            color: white;
+            border-top: thick;
+            border-top-color: black;
+        }
+
+.tab-content {
+    display: none;
+    /*background: black;*/
+    padding: 15px;
+}
+
+    .tab-content.current {
+        display: inherit;
+    }
+
+.captionSide {
+    caption-side: top;
+    color: black;
+    font-size: larger;
+    background-color: darkcyan;
+    font-weight: 600;
+    padding: 10px;
 }

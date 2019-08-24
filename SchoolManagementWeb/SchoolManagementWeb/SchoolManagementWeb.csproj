@@ -66,7 +66,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\Admin\Academics\AddClass.html" />
+    <Content Include="app\Admin\Academics\AddSection.html" />
+    <Content Include="app\Admin\Academics\AddSubject.html" />
+    <Content Include="app\Admin\Academics\Config_AssignClassTeacher.html" />
+    <Content Include="app\Admin\Academics\Config_AssignSubjects.html" />
+    <Content Include="app\Admin\Academics\Config_ClassTimetable.html" />
+    <Content Include="app\Commonpage.html" />
+    <Content Include="content\datatable.min.css" />
     <Content Include="content\fontawesome.min.css" />
+    <Content Include="content\semantic.min.css" />
+    <Content Include="content\semanticui.min.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -76,8 +86,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\semanticui\icons.svg" />
     <Content Include="img\pp.jpg" />
     <Content Include="img\schoolbanner.jpg" />
+    <Content Include="js\common.js" />
+    <Content Include="js\datatable.bootstrap.min.js" />
+    <Content Include="js\datatable.min.js" />
+    <Content Include="js\semantic.min.js" />
+    <Content Include="js\semanticui.min.js" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
     <Content Include="webfonts\fa-solid-900.svg" />
@@ -88,6 +104,14 @@
     <Content Include="fonts\Championship.ttf" />
     <Content Include="fonts\Viridian College.otf" />
     <Content Include="fonts\Viridian College.woff" />
+    <Content Include="fonts\icofont.ttf" />
+    <Content Include="fonts\icofont.woff" />
+    <Content Include="fonts\icofont.woff2" />
+    <Content Include="fonts\semanticui\icons.eot" />
+    <Content Include="fonts\semanticui\icons.otf" />
+    <Content Include="fonts\semanticui\icons.ttf" />
+    <Content Include="fonts\semanticui\icons.woff" />
+    <Content Include="fonts\semanticui\icons.woff2" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -133,7 +157,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\Admin\" />
+    <Folder Include="app\Admin\Attendance\" />
+    <Folder Include="app\Admin\Communicate\" />
+    <Folder Include="app\Admin\Exam\" />
+    <Folder Include="app\Admin\Homework\" />
+    <Folder Include="app\Admin\HumanResource\" />
+    <Folder Include="app\Admin\Library\" />
+    <Folder Include="app\Admin\Report\" />
+    <Folder Include="app\Admin\StudentInfo\" />
     <Folder Include="app\Register\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />

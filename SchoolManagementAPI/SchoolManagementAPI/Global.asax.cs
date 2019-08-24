@@ -19,5 +19,25 @@ namespace SchoolManagementAPI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
+            {
+                HttpContext.Current.Response.Flush();
+            }
+        }
+
+        protected void Application_BeginRequest()
+        {
+            //string[] allowedOrigin = new string[] { "http://localhost:55958", "http://localhost:55902" };
+            //var origin = HttpContext.Current.Request.Headers["Origin"];
+            //if (origin != null && allowedOrigin.Contains(origin))
+            //{
+            //    HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", origin);
+            //    HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+            //}
+        }
     }
 }

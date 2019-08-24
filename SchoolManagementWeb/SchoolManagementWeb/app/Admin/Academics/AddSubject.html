@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../../../content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../content/font-awesome-all.css" rel="stylesheet" />
+    <!--<link href="../../../content/datatable.min.css" rel="stylesheet" />-->
+    <link href="../../../content/semantic.min.css?2019" rel="stylesheet" />
+    <link href="../../../content/semanticui.min.css" rel="stylesheet" />
+    <link href="../../../content/common.css?2019" rel="stylesheet" />
+    <title>Add Subject </title>
+    <style>
+        .impfield:after {
+            content: "*";
+            color: red
+        }
+
+        .headerdesign {
+            background-color: transparent;
+            border-top-style: solid;
+            border-top-color: black;
+            border-top-width: thick;
+        }
+
+        .attachment {
+            float: right;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .academicsoperation {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        * {
+            font-size: medium;
+        }
+
+        .form-check-inline {
+            display: inline-flex !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 menu">
+                <h4 class="customfont2" style="padding-left: 80px;">mount carmel school</h4>
+                <div class="userlogin">
+                    <i class="far fa-calendar-alt" aria-hidden="true"></i>
+                    <i class="far fa-user-circle"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style="min-width: 200px;max-width: fit-content;">
+                <div class="content">
+                    <div id="jquery-accordion-menu" class="jquery-accordion-menu">
+                        <div class="jquery-accordion-menu-header">Current Session : 2019-2020 </div>
+                        <ul>
+                            <li class="active"><a href="#"><i class="fa fa-home"></i>Home </a></li>
+                            <li><a href="#"><i class="fa fa-user"></i>My Profile </a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-cog"></i>Academics </a>
+                                <ul class="submenu">
+                                    <li><a href="Config_ClassTimetable.html">Class Timetable</a></li>
+                                    <li><a href="Config_AssignClassTeacher.html">Assign Class Teachers</a></li>
+                                    <li><a href="Config_AssignSubjects.html">Assign Subject</a></li>
+                                    <li><a href="AddSubject.html">Subjects</a></li>
+                                    <li><a href="AddClass.html">Class</a></li>
+                                    <li><a href="AddSection.html">Sections</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="fa fa-calendar"></i>Class Timetable </a></li>
+                            <li><a href="#"><i class="fa fa-tasks"></i>Homework</a></li>
+                            <li><a href="#"><i class="fa fa-tasks"></i>Syllabus</a></li>
+                            <li><a href="#"><i class="fa fa-calendar-check"></i>Attendance</a></li>
+                            <li><a href="#"><i class="fa fa-map"></i>Examination</a></li>
+                            <li><a href="#"><i class="fa fa-bell"></i>NoticeBoard </a><span class="jquery-accordion-menu-label">12 </span></li>
+                            <li><a href="#"><i class="fa fa-book-open"></i>Subjects</a></li>
+                            <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>Teachers</a></li>
+                            <li><a href="#"><i class="fa fa-book-reader"></i>Library</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10 col-lg-10">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="color:white;margin-top:10px;">
+                        <div class="_headerdesign">
+                            <div>
+                                <table class="table table-light">
+                                    <caption class="captionSide">Add Subject</caption>
+                                    <tr>
+                                        <th class="impfield">Subject Name</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="_subjectname" class="form-control" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check-inline">
+                                                <input type="radio" name="_subjecttype" id="stype1" class="form-check-input" value="Theory" />
+                                                <label class="form-check-label" for="stype1">Theory</label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <input type="radio" name="_subjecttype" id="stype2" class="form-check-input" value="Practical" />
+                                                <label class="form-check-label" for="stype2">Practical</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="operation">
+                                <button type="button" class="btn btn-info attachment" id="btnAdd" value="Save"> Add </button>
+                                <button type="button" id="btnCancel" style="display:none" class="btn btn-info attachment" value="Cancel">Cancel</button>
+                                <button type="button" id="btnUpdate" style="display:none" class="btn btn-info attachment" value="Update">Update</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 col-sm-8 col-xs-8 col-lg-8" style="padding:30px;color:white;background-color:black;margin-top:10px;">
+                        <div class="_headerdesign">
+                            <table id="tblSubject" class="table-hover table-light ui celled table" style="color:black;width:100%;box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3)">
+                                <!--<caption class="captionSide">Subject List</caption>-->
+                                <thead id="_headerSubjectList"></thead>
+                                <tbody id="_bodySubjectList"></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/bootstrap/bootstrap.min.js"></script>
+    <script src="../../../js/fontawesome.min.js"></script>
+    <script src="../../../js/datatable.min.js"></script>
+    <script src="../../../js/semanticui.min.js"></script>
+    <script src="../../../js/semantic.min.js"></script>
+    <script src="../../../js/common.js?2019"></script>
+    <script type="text/javascript">
+        var Id = 0;
+        var op = 0;
+        $(document).ready(function () {
+            LoadSubjects();
+        });
+
+        function AddUpdateCommon(){
+            var subjectName = $('#_subjectname').val();
+            var subjectType = $('input[name=_subjecttype]:checked');
+            if (subjectName == "" || subjectType.length == 0) {
+                alert("please fill mandatory fields.")
+            }
+            else {
+                var objSubject = {};
+                objSubject.SubjectName = subjectName;
+                objSubject.SubjectType = subjectType.val();
+                objSubject.Id = Id;
+                objSubject.Operation = op;
+                objSubject.InsertedBy = 0;
+
+                AddUpdateSubjects(objSubject);
+            }
+        }
+
+        $('#btnAdd').on('click', function () {
+            op = 0;
+            AddUpdateCommon(op);
+        });
+
+        $('#btnUpdate').on('click', function () {
+            op = 1;
+            AddUpdateCommon(op);
+        });
+
+        $('#btnCancel').on('click', function () {
+            $('#_subjectname').val("");
+            $('input[name=_subjecttype]').prop("checked", false);
+            $('#btnUpdate').hide();
+            $('#btnCancel').hide();
+            $('#btnAdd').show();
+        });
+
+        $(document).on("click", "#edit", function () {
+            var $row = $(this).closest('tr');
+            var $tds = $row.find('td')
+            Id = $tds[0].innerText;
+            var subjectName = $tds[1].innerText;
+            var subjectType = $tds[2].innerText;
+            $('#_subjectname').val(subjectName);
+            if (subjectType != undefined && subjectType.toLowerCase() == "practical")
+                $('#stype2').prop("checked", true);
+            else
+                $('#stype1').prop("checked", true);
+            $('#btnAdd').hide();
+            $('#btnUpdate').show();
+            $('#btnCancel').show();
+        });
+
+        $(document).on("click", "#delete", function () {
+            op = 2;
+            var $row = $(this).closest('tr');
+            var $tds = $row.find('td')
+            Id = $tds[0].innerText;
+            var subjectName = $tds[1].innerText;
+            var r = confirm("Do you really want to delete " + subjectName + " subject ?");
+            if (r == true) {
+                $row.css('background', 'tomato');
+                $row.fadeOut(200, function () {
+                    $(this).remove();
+                });
+                var objSubject = {};
+                objSubject.SubjectName = "";
+                objSubject.SubjectType = "";
+                objSubject.Id = Id;
+                objSubject.Operation = op; //For delete
+                objSubject.InsertedBy = "1";
+
+                AddUpdateSubjects(objSubject);
+            }
+        });
+
+        function AddUpdateSubjects(objSubject) {
+            var jsonData = JSON.stringify({ objSubject });
+            $.ajax({
+                url: apiUrl + "/Admin/CRUDSubject/",
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: jsonData,
+                success: function (response) {
+                    if (response.status == 1) {
+                        //for new subject
+                        $('#_subjectname').val("");
+                        $('input[name=_subjecttype]').prop("checked", false);
+                        if (op == 0) {
+                            //alert("data saved");
+                            $('#btnAdd').show();
+                            $('#btnUpdate').hide();
+                            $('#btnCancel').hide();
+                        }
+                        //for update
+                        else if (op == 1) {
+                            //alert("data updated");
+                            $('#btnAdd').show();
+                            $('#btnUpdate').hide();
+                            $('#btnCancel').hide();
+                        }
+                        //for delete
+                        else if (op == 2) {
+                            //alert("data deleted");
+                        }
+                        //Load Subject List
+                        LoadSubjects();
+                    }
+                    else if (response.status == 0) {
+                        alert("Please fill mandatory fields.");
+                    }
+                    else {
+                        alert("error occured.");
+                    }
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            });
+        }
+
+        function LoadSubjects() {
+            $.ajax({
+                url: apiUrl + "/Admin/GetSubjectList",
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '',
+                success: function (response) {
+                    $("#_headerSubjectList").empty();
+                    $("#_bodySubjectList").empty();
+
+                    if (response.length > 0) {
+                        var header = "<tr><th>Id</th><th>Subject</th> <th>Subject Type</th> <th>Action</th></tr>";
+                        $("#_headerSubjectList").append(header);
+
+                        $("#tblSubject").dataTable({
+                            order: [1, 'asc'],
+                            data: response,
+                            columns: [
+                                {
+                                    'data': 'Id',
+                                    //"visible" : false
+                                },
+                                {
+                                    'data': 'SubjectName',
+                                },
+                                { 'data': 'SubjectType' },
+                                {
+                                    'data': 'Action',
+                                    "render": function () {
+                                        return "<i id='edit' class='fa fa-edit academicsoperation'></i><i id='delete' class='fa fa-trash academicsoperation'></i>";
+                                    }
+                                },
+                            ],
+                            //stateSave: true,
+                            destroy: true,
+                            "scrollY": "350px",
+                            columnDefs: [
+                                { orderable: false, targets: -1 }
+                            ]
+                        });
+                    }
+                    else {
+                        $("#_bodySubjectList").append("<tr><td>No Subjects found</td></tr>");
+                    }
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

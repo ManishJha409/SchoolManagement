@@ -14,7 +14,9 @@ E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagem
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Microsoft.Web.Infrastructure.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Newtonsoft.Json.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Net.Http.Formatting.dll
+E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Cors.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Helpers.dll
+E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Http.Cors.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Http.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Http.WebHost.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Mvc.dll
@@ -25,10 +27,11 @@ E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagem
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.WebPages.Razor.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\WebGrease.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Newtonsoft.Json.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Net.Http.Formatting.xml
-E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Helpers.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Http.xml
+E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Http.Cors.xml
+E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Newtonsoft.Json.xml
+E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Helpers.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Http.WebHost.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Mvc.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\System.Web.Optimization.xml
@@ -42,7 +45,7 @@ E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagem
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Microsoft.AI.ServerTelemetryChannel.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Microsoft.AI.WindowsServer.xml
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\bin\Microsoft.AI.Web.xml
-E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\obj\Debug\SchoolManagementAPI.csprojResolveAssemblyReference.cache
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\obj\Debug\SchoolManagementAPI.csproj.CoreCompileInputs.cache
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\obj\Debug\SchoolManagementAPI.dll
 E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\obj\Debug\SchoolManagementAPI.pdb
+E:\My GitHub Project\School Management Project\SchoolManagementAPI\SchoolManagementAPI\obj\Debug\SchoolManagementAPI.csprojResolveAssemblyReference.cache
