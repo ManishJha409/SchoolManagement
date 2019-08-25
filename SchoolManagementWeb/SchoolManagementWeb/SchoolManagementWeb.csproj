@@ -77,6 +77,7 @@
     <Content Include="content\fontawesome.min.css" />
     <Content Include="content\semantic.min.css" />
     <Content Include="content\semanticui.min.css" />
+    <Content Include="content\sweetalert.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -87,6 +88,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\semanticui\icons.svg" />
+    <Content Include="img\loader.gif" />
+    <Content Include="img\loader1.gif" />
+    <Content Include="img\loader2.gif" />
+    <Content Include="img\loader3.gif" />
+    <Content Include="img\loader5.gif" />
     <Content Include="img\pp.jpg" />
     <Content Include="img\schoolbanner.jpg" />
     <Content Include="js\common.js" />
@@ -94,6 +100,7 @@
     <Content Include="js\datatable.min.js" />
     <Content Include="js\semantic.min.js" />
     <Content Include="js\semanticui.min.js" />
+    <Content Include="js\sweetalert.min.js" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
     <Content Include="webfonts\fa-solid-900.svg" />

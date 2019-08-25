@@ -70,15 +70,21 @@ namespace SchoolManagementAPI.Controllers
         }
 
         [HttpPost]
-        public JObject AddSection(string sectionName)
+        public JObject CRUDSection(JObject objSection)
         {
+            Section sec = null;
+            if (objSection != null)
+            {
+                var secJson = objSection["objSection"].ToString();
+                sec = JsonConvert.DeserializeObject<Section>(secJson);
+            }
             var jo = new JObject();
             try
             {
                 Admin admin = new Admin();
-                if (!string.IsNullOrEmpty(sectionName))
+                if (sec != null)
                 {
-                    var status = admin.AddSection(sectionName);
+                    var status = admin.CRUDSection(sec);
                     if (status)
                         jo["status"] = 1;
                 }

@@ -56,11 +56,13 @@ namespace SchoolManagementAPI.Models
                     {
                         foreach (DataRow row in subObj.Rows)
                         {
-                            Subjects sub = new Subjects();
-                            sub.SubjectName = row["SubjectName"].ToString();
-                            sub.SubjectType = row["SubjectType"].ToString();
-                            sub.InsertedBy = row["Inserted_By"].ToString();
-                            sub.Id = row["Id"].ToString();
+                            Subjects sub = new Subjects
+                            {
+                                SubjectName = row["SubjectName"].ToString(),
+                                SubjectType = row["SubjectType"].ToString(),
+                                InsertedBy = row["Inserted_By"].ToString(),
+                                Id = row["Id"].ToString()
+                            };
                             subList.Add(sub);
                         }
                     }
@@ -75,20 +77,25 @@ namespace SchoolManagementAPI.Models
         }
 
         //Add Section details and show class list
-        public bool AddSection(string sectionName)
+        public bool CRUDSection(Section objSection)
         {
             var status = false;
             try
             {
-                List<SqlParameter> sp = new List<SqlParameter>()
+                if (objSection != null)
                 {
-                    new SqlParameter() {ParameterName = "@sectionname", Value= sectionName},
-                    new SqlParameter() {ParameterName = "@inserted_by", Value= 0},
-
-                };
-                var response = helper.ExecNonQueryProc("usp_Academics_AddSection", sp);
-                if (response > 0)
-                    status = true;
+                    List<SqlParameter> sp = new List<SqlParameter>()
+                    {
+                        new SqlParameter() {ParameterName = "@sectionname", Value= objSection.SectionName},
+                        new SqlParameter() {ParameterName = "@inserted_by", Value= 0},
+                        new SqlParameter() {ParameterName = "@id", Value= objSection.Id},
+                        new SqlParameter() {ParameterName = "@operation", Value= objSection.Operation}
+                    };
+                    var spParams = sp.Cast<object>().ToArray();
+                    var response = helper.ExecNonQueryProc("usp_Academics_AddSection", spParams);
+                    if (response > 0)
+                        status = true;
+                }
             }
             catch (Exception ex)
             {
@@ -106,14 +113,19 @@ namespace SchoolManagementAPI.Models
                 var response = helper.ExecDataSetProc("usp_Academics_GetSection");
                 if (response != null && response.Tables.Count > 0)
                 {
-                    var subObj = response.Tables[0];
-                    if (subObj.Rows.Count > 0)
+                    var secObj = response.Tables[0];
+                    if (secObj.Rows.Count > 0)
                     {
-                        Section sec = new Section();
-                        sec.SectionName = subObj.Columns["SectionName"].ToString();
-                        sec.Inserted_By = int.Parse(subObj.Columns["Inserted_By"].ToString());
-                        sec.Id = int.Parse(subObj.Columns["Id"].ToString());
-                        secList.Add(sec);
+                        foreach (DataRow row in secObj.Rows)
+                        {
+                            Section sec = new Section
+                            {
+                                SectionName = secObj.Columns["DivisionName"].ToString(),
+                                Inserted_By = int.Parse(secObj.Columns["Inserted_By"].ToString()),
+                                Id = int.Parse(secObj.Columns["DivisionId"].ToString())
+                            };
+                            secList.Add(sec);
+                        }
                     }
                 }
             }
@@ -320,6 +332,7 @@ namespace SchoolManagementAPI.Models
         public int Id { get; set; }
         public string SectionName { get; set; }
         public int Inserted_By { get; set; }
+        public int Operation { get; set; }
     }
 
     public class Class
