@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -26,7 +27,7 @@ namespace SchoolManagementAPI.Models
                         new SqlParameter() {ParameterName = "@subjecttype", Value= objSubject.SubjectType},
                         new SqlParameter() {ParameterName = "@operation", Value= objSubject.Operation},
                         new SqlParameter() {ParameterName = "@id", Value= Convert.ToInt32(objSubject.Id)},
-                        new SqlParameter() {ParameterName = "@inserted_by", Value= 0},
+                        new SqlParameter() {ParameterName = "@inserted_by", Value= objSubject.InsertedBy},
                     };
 
                     var spParams = sp.Cast<object>().ToArray();
@@ -87,7 +88,7 @@ namespace SchoolManagementAPI.Models
                     List<SqlParameter> sp = new List<SqlParameter>()
                     {
                         new SqlParameter() {ParameterName = "@sectionname", Value= objSection.SectionName},
-                        new SqlParameter() {ParameterName = "@inserted_by", Value= 0},
+                        new SqlParameter() {ParameterName = "@inserted_by", Value= objSection.InsertedBy},
                         new SqlParameter() {ParameterName = "@id", Value= objSection.Id},
                         new SqlParameter() {ParameterName = "@operation", Value= objSection.Operation}
                     };
@@ -120,9 +121,9 @@ namespace SchoolManagementAPI.Models
                         {
                             Section sec = new Section
                             {
-                                SectionName = secObj.Columns["DivisionName"].ToString(),
-                                Inserted_By = int.Parse(secObj.Columns["Inserted_By"].ToString()),
-                                Id = int.Parse(secObj.Columns["DivisionId"].ToString())
+                                SectionName = row["DivisionName"].ToString(),
+                                InsertedBy = Convert.ToInt32(row["Inserted_By"].ToString()),
+                                Id = Convert.ToInt32(row["DivisionId"].ToString())
                             };
                             secList.Add(sec);
                         }
@@ -138,19 +139,26 @@ namespace SchoolManagementAPI.Models
         }
 
         //Add class details and show class list
-        public bool AddClass(string className)
+        public bool? CRUDClass(Class objClass)
         {
-            var status = false;
+            bool? status = false;
             try
             {
                 List<SqlParameter> sp = new List<SqlParameter>()
                 {
-                    new SqlParameter() {ParameterName = "@sectionname", Value= className},
-                    new SqlParameter() {ParameterName = "@inserted_by", Value= 0},
-
+                    new SqlParameter() {ParameterName = "@classname", Value= objClass.ClassName},
+                    new SqlParameter() {ParameterName = "@sections", Value= objClass.Sections.ToString()},
+                    new SqlParameter() {ParameterName = "@operation", Value= objClass.Operation},
+                    new SqlParameter() {ParameterName = "@id", Value= objClass.ClassId},
+                    new SqlParameter() {ParameterName = "@inserted_by", Value= objClass.InsertedBy},
+                    new SqlParameter() {ParameterName = "@result", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.ReturnValue},
                 };
-                var response = helper.ExecNonQueryProc("usp_Academics_AddClass", sp);
-                if (response > 0)
+                var spParams = sp.Cast<object>().ToArray();
+                var response = helper.ExecNonQueryProc("usp_Academics_AddClass", spParams);
+                var resp = sp.OfType<SqlParameter>().Where(x => x.ParameterName == "@result").FirstOrDefault();
+                if (objClass.Operation == 0 && resp != null && Convert.ToInt32(resp.Value) == 0)
+                    status = null;
+                else if (response > 0)
                     status = true;
             }
             catch (Exception ex)
@@ -176,8 +184,9 @@ namespace SchoolManagementAPI.Models
                         {
                             Class _class = new Class();
                             _class.ClassName = row["ClassName"].ToString();
-                            _class.Inserted_By = int.Parse(row["Inserted_By"].ToString());
-                            _class.ClassId = int.Parse(row["Id"].ToString());
+                            _class.Sections = JArray.Parse(row["Sections"].ToString());
+                            _class.InsertedBy = int.Parse(row["Inserted_By"].ToString());
+                            _class.ClassId = int.Parse(row["ClassId"].ToString());
                             classList.Add(_class);
                         }
                     }
@@ -191,10 +200,41 @@ namespace SchoolManagementAPI.Models
             return classList;
         }
 
-        //Save And get Class Timetable
-        public bool AddClassTimetable(Class objClass)
+        public Class GetClassById(int classId)
         {
-            var status = false;
+            Class _class = new Class();
+            try
+            {
+                SqlParameter sp = new SqlParameter()
+                {
+                    ParameterName = "@id",
+                    Value = classId
+                };
+                
+                var response = helper.ExecDataSetProc("usp_Academics_GetClassById", sp);
+                if (response != null && response.Tables.Count > 0)
+                {
+                    var subObj = response.Tables[0];
+                    if (subObj.Rows.Count > 0)
+                    {
+                        var row = subObj.Rows[0];
+                        _class.ClassName = row["ClassName"].ToString();
+                        _class.Sections = JArray.Parse(row["Sections"].ToString());
+                        _class.InsertedBy = int.Parse(row["Inserted_By"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                exception.SendExcepToDB(ex);
+            }
+            return _class;
+        }
+
+        //Save And get Class Timetable
+        public bool? CRUDClassTimetable(Class objClass)
+        {
+            bool? status = false;
             try
             {
                 List<SqlParameter> sp = new List<SqlParameter>()
@@ -202,14 +242,18 @@ namespace SchoolManagementAPI.Models
                     new SqlParameter() {ParameterName = "@classid", Value= objClass.ClassId},
                     new SqlParameter() {ParameterName = "@sectionid", Value= objClass.SectionId},
                     new SqlParameter() {ParameterName = "@subjectid", Value= objClass.SubjectId},
-                    new SqlParameter() {ParameterName = "@day", Value= objClass._Day},
-                    new SqlParameter() {ParameterName = "@starttime", Value= objClass.StartTime},
-                    new SqlParameter() {ParameterName = "@endtime", Value= objClass.EndTime},
-                    new SqlParameter() {ParameterName = "@roomno", Value= objClass.RoomNo},
-                    new SqlParameter() {ParameterName = "@inserted_by", Value= objClass.Inserted_By},
+                    new SqlParameter() {ParameterName = "@classconfig", Value= objClass.ClassConfig.ToString()},
+                    new SqlParameter() {ParameterName = "@operation", Value= objClass.Operation},
+                    new SqlParameter() {ParameterName = "@inserted_by", Value= objClass.InsertedBy},
+                    new SqlParameter() {ParameterName = "@result", SqlDbType = SqlDbType.Int, Direction = ParameterDirection.ReturnValue},
                 };
-                var response = helper.ExecNonQueryProc("usp_Academics_AddClassTimetable", sp);
-                if (response > 0)
+                var spParams = sp.Cast<object>().ToArray();
+                var response = helper.ExecNonQueryProc("usp_Academics_AddClassTimetable", spParams);
+
+                var resp = sp.OfType<SqlParameter>().Where(x => x.ParameterName == "@result").FirstOrDefault();
+                if (objClass.Operation == 0 && resp != null && Convert.ToInt32(resp.Value) == 0)
+                    status = null;
+                else if (response > 0)
                     status = true;
             }
             catch (Exception ex)
@@ -242,7 +286,7 @@ namespace SchoolManagementAPI.Models
                             _class.StartTime = Convert.ToDateTime(row["StartTime"].ToString());
                             _class.EndTime = Convert.ToDateTime(row["EndTime"].ToString());
                             _class.RoomNo = int.Parse(row["SubjectName"].ToString());
-                            _class.Inserted_By = int.Parse(row["Inserted_By"].ToString());
+                            _class.InsertedBy = int.Parse(row["Inserted_By"].ToString());
                             classList.Add(_class);
                         }
                     }
@@ -268,7 +312,7 @@ namespace SchoolManagementAPI.Models
                     new SqlParameter() {ParameterName = "@sectionid", Value= objClass.SectionId},
                     new SqlParameter() {ParameterName = "@subjectid", Value= objClass.SubjectId},
                     new SqlParameter() {ParameterName = "@teacherid", Value= objClass.TeacherId},
-                    new SqlParameter() {ParameterName = "@inserted_by", Value= objClass.Inserted_By},
+                    new SqlParameter() {ParameterName = "@inserted_by", Value= objClass.InsertedBy},
                 };
                 var response = helper.ExecNonQueryProc("usp_Academics_AssignSubjects", sp);
                 if (response > 0)
@@ -302,7 +346,7 @@ namespace SchoolManagementAPI.Models
                             _class.ClassName = row["ClassName"].ToString();
                             _class.SectionName = row["SectionName"].ToString();
                             _class.TeacherName = row["TeacherName"].ToString();
-                            _class.Inserted_By = int.Parse(row["Inserted_By"].ToString());
+                            _class.InsertedBy = int.Parse(row["Inserted_By"].ToString());
                             classList.Add(_class);
                         }
                     }
@@ -331,7 +375,7 @@ namespace SchoolManagementAPI.Models
     {
         public int Id { get; set; }
         public string SectionName { get; set; }
-        public int Inserted_By { get; set; }
+        public int InsertedBy { get; set; }
         public int Operation { get; set; }
     }
 
@@ -343,12 +387,16 @@ namespace SchoolManagementAPI.Models
         public string ClassName { get; set; }
         public string SubjectName { get; set; }
         public string SectionName { get; set; }
-        public int Inserted_By { get; set; }
+        public int InsertedBy { get; set; }
         public DayOfWeek _Day { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int RoomNo { get; set; }
         public int TeacherId { get; set; }
         public string TeacherName { get; set; }
+        public JArray Sections { get; set; }
+        public List<string> SectionList { get; set; }
+        public JArray ClassConfig { get; set; }
+        public int Operation { get; set; }
     }
 }

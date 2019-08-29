@@ -5,3 +5,15 @@ eval(function (p, a, c, k, e, d) { e = function (c) { return c }; if (!''.replac
 
 //var apiUrl = "http://schoolapi/api";
 var apiUrl = "http://localhost:55958/api";
+
+//Common Sweetalert
+function Alert(type, title, text) {
+    Swal.fire({
+        //position: 'top-end',
+        type: type,
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        timer: 1500
+    })
+}

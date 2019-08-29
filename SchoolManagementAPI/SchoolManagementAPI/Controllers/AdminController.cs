@@ -87,6 +87,8 @@ namespace SchoolManagementAPI.Controllers
                     var status = admin.CRUDSection(sec);
                     if (status)
                         jo["status"] = 1;
+                    else
+                        jo["status"] = -1;
                 }
                 else
                 {
@@ -104,7 +106,7 @@ namespace SchoolManagementAPI.Controllers
             return jo;
         }
 
-        [HttpPost]
+        [HttpGet]
         public List<Section> GetSectionList()
         {
             var sections = new List<Section>();
@@ -122,22 +124,32 @@ namespace SchoolManagementAPI.Controllers
         }
 
         [HttpPost]
-        public JObject AddClass(string className)
+        public JObject CRUDClass(JObject objClass)
         {
             var jo = new JObject();
+            Class _class = null;
+            if (objClass != null)
+            {
+                var classJson = objClass["objClass"].ToString();
+                _class = JsonConvert.DeserializeObject<Class>(classJson);
+            }
             try
             {
                 Admin admin = new Admin();
-                if (!string.IsNullOrEmpty(className))
+                if (_class != null)
                 {
-                    var status = admin.AddClass(className);
-                    if (status)
+                    bool? status = admin.CRUDClass(_class);
+                    if (status == null)
+                        jo["status"] = 0;
+                    else if (status.HasValue && status.Value)
                         jo["status"] = 1;
+                    else
+                        jo["status"] = -1;
                 }
                 else
                 {
                     jo["message"] = "Please enter Class name";
-                    jo["status"] = 0;
+                    jo["status"] = 2;
                 }
             }
             catch (Exception ex)
@@ -150,7 +162,7 @@ namespace SchoolManagementAPI.Controllers
             return jo;
         }
 
-        [HttpPost]
+        [HttpGet]
         public List<Class> GetClassList()
         {
             var _classList = new List<Class>();
@@ -167,18 +179,45 @@ namespace SchoolManagementAPI.Controllers
             return _classList;
         }
 
+        [HttpGet]
+        public Class GetClassById(int classId)
+        {
+            var _class = new Class();
+            try
+            {
+                Admin admin = new Admin();
+                _class = admin.GetClassById(classId);
+            }
+            catch (Exception ex)
+            {
+                e.SendExcepToDB(ex);
+            }
+
+            return _class;
+        }
+
         [HttpPost]
-        public JObject AddClassTimetable(Class objClass)
+        public JObject CRUDClassTimetable(JObject objClassTimetable)
         {
             var jo = new JObject();
             try
             {
-                Admin admin = new Admin();
-                if (objClass != null)
+                Class _class = null;
+                if (objClassTimetable != null)
                 {
-                    var status = admin.AddClassTimetable(objClass);
-                    if (status)
+                    var classJson = objClassTimetable["objClassTimetable"].ToString();
+                    _class = JsonConvert.DeserializeObject<Class>(classJson);
+                }
+                Admin admin = new Admin();
+                if (_class != null)
+                {
+                    bool? status = admin.CRUDClassTimetable(_class);
+                    if (status == null)
+                        jo["status"] = 0;
+                    else if (status.HasValue && status.Value)
                         jo["status"] = 1;
+                    else
+                        jo["status"] = -1;
                 }
                 else
                 {

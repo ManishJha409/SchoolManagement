@@ -5,43 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="../../../content/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="../../../content/datatable.min.css" rel="stylesheet" />
+    <!--<link href="../../../content/multi-select.css?201" rel="stylesheet" />-->
     <link href="../../../content/font-awesome-all.css" rel="stylesheet" />
+   <link href="../../../content/select2.min.css" rel="stylesheet" />
+    <!--<link href="../../../content/datatable.min.css" rel="stylesheet" />-->
+    <link href="../../../content/semantic.min.css?2019" rel="stylesheet" />
+    <link href="../../../content/semanticui.min.css" rel="stylesheet" />
+    <link href="../../../content/sweetalert.css?2019" rel="stylesheet" />
     <link href="../../../content/common.css?2019" rel="stylesheet" />
     <title>Class Timetable </title>
     <style>
-        .impfield:after {
-            content: "*";
-            color: red
+        .form-check-inline {
+            display: inline-flex !important;
         }
 
-        .headerdesign {
-            background-color: transparent;
-            border-top-style: solid;
-            border-top-color: black;
-            border-top-width: thick;
+        .operation {
+            box-shadow: 0 20px 50px #333;
         }
 
-        .attachment {
-            float: right;
-            cursor: pointer;
+        .subgrid {
+            padding: 30px;
+            color: white;
+            background-color: black;
+            /*margin-top: 10px;*/
+            display: none;
         }
 
-        .academicsoperation {
-            cursor: pointer;
+        .timetablediv {
+            background-color: white;
+            margin: 15px 0;
+            padding: 15px;
+            box-shadow: 0 20px 50px #333;
+        }
+
+        .input-group-addon {
+            color: #ffffff;
+            background-color: cadetblue;
+            font-size: large;
             padding: 5px;
         }
 
-        .divdesign {
-            padding: 10px;
-            margin: 10px;
+        .select2-container--default .select2-selection--single {
+            height: 35px;
         }
     </style>
 </head>
 <body>
     <div class="container1">
+        <div class="loader" style="display: none">
+            <div class="center">
+                <img src="../../../img/loader3.gif" />
+            </div>
+        </div>
+
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 menu">
+            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 menubar">
                 <h4 class="customfont2" style="padding-left: 80px;">mount carmel school</h4>
                 <div class="userlogin">
                     <i class="far fa-calendar-alt" aria-hidden="true"></i>
@@ -82,221 +100,595 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-10 col-xs-10 col-lg-10">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 divdesign">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="border-top: 0px solid;padding: 5px;">
-                                <div style="display:block;padding:5px;">
-                                    <h4 style="display:inline-block"><i class="fa fa-search"></i> Search Criteria</h4> <button class="btn btn-info" style="float:right;" type="button">
-                                        <i class="fa fa-plus"></i> Add
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                                <p>Class</p>
-                                <select class="form-control" id="_classlist">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                                <p>Section</p>
-                                <select class="form-control" id="_sectionlist">
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>C</option>
-                                    <option>D</option>
-                                    <option>E</option>
-                                    <option>F</option>
-                                </select>
-
-                            </div>
-
-                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding: 5px;">
-                                <button class="btn btn-info" style="float:right;margin:10px" type="button"><i class="fa fa-search"></i> Search</button>
-                            </div>
+            <div id="divShowTimetable" class="col-md-10 col-sm-10 col-xs-10 col-lg-10">
+                <div class="timetablediv">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                            <h3> <i class="fa fa-search"></i> Search Criteria</h3>
+                            <button id="btnAdd" class="btn btn-info" style="float:right; margin-top: -35px;">
+                                <i class="fa fa-plus"></i> Add
+                            </button>
                         </div>
-
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:10px">
+                            <h4 class="impfield">Class</h4>
+                            <select class="form-control ddlClass2" style="width:500px"><option value="-1"></option></select>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:10px">
+                            <h4 class="impfield">Section</h4>
+                            <select class="form-control ddlSection2" style="width:500px"><option value="-1"></option></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="margin: 10px 0;">
+                            <button id="btnSearch" class="btn btn-info" style="float:right;">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:10px;color:white;border:1px">
-                        <div class="headerdesign">
-                            <table class="table table-hover table-light" style="color:black;box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3)">
-                                <caption class="captionSide"><i class="far fa-clock"></i> Class Timetable <i class="fa fa-print" style="display:inline;float:right;"></i></caption>
-                                <thead>
-                                    <tr>
-                                        <th>Subject</th>
-                                        <th>Monday</th>
-                                        <th>Tuesday</th>
-                                        <th>Wednesday</th>
-                                        <th>Thursday</th>
-                                        <th>Friday</th>
-                                        <th>Saturday</th>
-                                        <th>Sunday</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="_sectionlist">
-                                    <tr>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Science</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Biology</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                        <td>Maths</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="timetablediv">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:10px;color:white;border:1px">
+                            <div class="headerdesign">
+                                <table class="table table-hover table-light" style="color:black;box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3)">
+                                    <caption class="captionSide"><i class="far fa-clock"></i> Class Timetable <i class="fa fa-print" style="display:inline;float:right;"></i></caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <th>Monday</th>
+                                            <th>Tuesday</th>
+                                            <th>Wednesday</th>
+                                            <th>Thursday</th>
+                                            <th>Friday</th>
+                                            <th>Saturday</th>
+                                            <th>Sunday</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="_timetablelist"></tbody>
+                                </table>
+
+                            </div>
 
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!--Modal-->
-        <div id="addTimetable" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Class Timetable</h4>
-                    </div>
-                    <div class="modal-body">
+                <!-- Add ClassTimetable div -->
+                <div id="divAddTimetable" class="col-md-10 col-sm-10 col-xs-10 col-lg-10" style="display:none">
+                    <div class="timetablediv">
                         <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:10px;">
-                                <p>Class</p>
-                                <select class="form-control" id="_classlist">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                </select>
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:10px">
+                                <h3> <i class="fa fa-search"></i> Search Criteria</h3>
                             </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:10px;">
-                                <p>Section</p>
-                                <select class="form-control" id="_sectionlist">
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>C</option>
-                                    <option>D</option>
-                                    <option>E</option>
-                                    <option>F</option>
-                                </select>
-
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="padding:10px">
+                                <h4 class="impfield">Class</h4>
+                                <select class="form-control ddlClass2" style="width:300px"><option value="-1"></option></select>
                             </div>
-                            <div class="col-md-12">
-                                <div class="headerdesign">
-                                    <table class="table table-hover table-light" style="color:black;box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3)">
-                                        <caption class="captionSide"><i class="far fa-clock"></i> Class Timetable <i class="fa fa-print" style="display:inline;float:right;"></i></caption>
-                                        <thead>
-                                            <tr>
-                                                <th>Day</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Room No</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="timetablelist">
-                                            <tr>
-                                                <td>Monday</td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td>101</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tuesday</td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td>101</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Wednesday</td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td>101</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Thursday</td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td>101</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Friday</td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td>101</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Saturday</td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td><input type="time" class="form-control" /></td>
-                                                <td>101</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sunday</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="padding:10px">
+                                <h4 class="impfield">Section</h4>
+                                <select class="form-control ddlSection2" style="width:300px"><option value="-1"></option></select>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="padding:10px">
+                                <h4 class="impfield">Subject</h4>
+                                <select class="form-control ddlSubject2" style="width:300px"><option value="-1"></option></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                                <input type="button" class="btn btn-info" value="Search" style="float:right" />
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+                    <div class="timetablediv">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:10px">
+                                <h3> <i class="fas fa-user-clock"></i> Class Timetable</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4>Day</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4>Start Time</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4>End Time</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4>Room No</h4>
+                            </div>
+                        </div>
+                        <!-- Monday -->
+                        <div class="row imp">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4 class="impfield">Monday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="m_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="m_etime" type="time" class="form-control etime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+                        <!-- Tuesday -->
+                        <div class="row imp">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4 class="impfield">Tuesday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="t_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="t_etime" type="time" class="form-control etime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+                        <!-- Wednesday -->
+                        <div class="row imp">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4 class="impfield">Wednesday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="w_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="w_etime" type="time" class="form-control etime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+                        <!-- Thursday -->
+                        <div class="row imp">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4 class="impfield">Thursday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="th_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="th_etime" type="time" class="form-control etime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+                        <!-- Friday -->
+                        <div class="row imp">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4 class="impfield">Friday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="f_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="f_etime" type="time" class="form-control etime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+                        <!-- Saturday -->
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4>Saturday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="s_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="s_etime" type="time" class="form-control etime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+                        <!-- Sunday -->
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <h4>Sunday</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="su_stime" type="time" class="form-control stime" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px etime">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="su_etime" type="time" class="form-control" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3" style="padding:10px">
+                                <input type="text" class="form-control room" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="text-align: center; padding: 8px;">
+                                <input type="button" id="btnSave" class="btn btn-lg btn-info" value="Save" />
+                                <input type="button" id="btnCancel" class="btn btn-lg btn-danger" value="Cancel" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
     </div>
 
-    <script src="../../../js/jquery.min.js"></script>
-    <script src="../../../js/bootstrap/bootstrap.min.js"></script>
-    <script src="../../../js/datatable.min.js"></script>
-    <script src="../../../js/fontawesome.min.js"></script>
-    <script src="../../../js/login.js"></script>
-    <script src="../../../js/common.js"></script>
-    <script type="text/javascript">
 
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/umd/popper.js"></script>
+    <script src="../../../js/bootstrap/bootstrap.min.js"></script>
+    <!--<script src="../../../js/bootstrap-multiselect.js"></script>-->
+    <script src="../../../js/select2.min.js"></script>
+    <script src="../../../js/fontawesome.min.js"></script>
+    <script src="../../../js/datatable.min.js"></script>
+    <script src="../../../js/semanticui.min.js"></script>
+    <script src="../../../js/semantic.min.js"></script>
+    <script src="../../../js/sweetalert.min.js?2019"></script>
+    <script src="../../../js/common.js?_2019"></script>
+    <script type="text/javascript">
+        var op = 0;
         $(document).ready(function () {
-            $("#_addclasstimetable").modal("show");
+            ApplySelectJS("ddlClass2", "Class");
+            ApplySelectJS("ddlSection2", "Section");
+            ApplySelectJS("ddlSubject2", "Subject");
+            $(".ddlSection2").prop('disabled', true);
+            LoadClasses();
+            LoadSubjects();
+        });
+        //Load section based on class change
+        $('.ddlClass2').on('change', function () {
+            var classId = $(this).val();
+            if (classId != "" && classId != undefined) {
+                LoadSectionByClass(classId);
+            }
+            else {
+                $(".ddlSection2").prop('disabled', true);
+            }
         });
 
+        $('#btnAdd').on('click', function () {
+            $("#divShowTimetable").hide();
+            $("#divAddTimetable").show();
+        });
+
+        $('#btnSearch').on('click', function () {
+        });
+
+        $('#btnCancel').on('click', function () {
+            $("#divAddTimetable").hide();
+            $("#divShowTimetable").show();
+        });
+
+        $('#btnSave').on('click', function () {
+            op = 0;
+            GetFieldsForSaveTimetable(op);
+        });
+
+        function ApplySelectJS(Id, name) {
+            var configParamsObj = {
+                placeholder: {
+                    id: '-1', // the value of the option
+                    text: 'Select '+ name + ''
+                },
+                allowClear: true,
+                closeOnSelect: true
+            };
+            $('.'+Id+'').select2(configParamsObj);
+        }
+
+        function LoadClasses() {
+            $.ajax({
+                url: apiUrl + "/Admin/GetClassList",
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '',
+                beforeSend: function () {
+                    $(".loader").show();
+                },
+                success: function (response) {
+                    $(".ddlClass2").empty();
+                    if (response.length > 0) {
+                        $(".ddlClass2").append("<option value='-1'></option>");
+                        $.each(response, function (index, _class) {
+                            $('<option>').val(_class.ClassId).text("Class "+_class.ClassName+"").appendTo('.ddlClass2');
+                        });
+                    }
+                },
+                error: function (response) {
+                    Swal.fire("Oops", "error occured !", "error");
+                    console.log(response.responseText);
+                },
+                complete: function () {
+                    $(".loader").hide();
+                }
+            });
+        }
+
+        function LoadSectionByClass(classId) {
+            var apiStatus = false;
+            $.ajax({
+                url: apiUrl + "/Admin/GetClassById?classId=" + classId,
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '',
+                beforeSend: function () {
+                    $(".loader").show();
+                },
+                success: function (response) {
+                    $(".ddlSection2").empty();
+                    if (response != "" && response != null && response != undefined) {
+                        apiStatus = true;
+                        var sections = response.Sections;
+                        $(".ddlSection2").append("<option value='-1'></option>");
+                        $.each(sections, function (index, sec) {
+                            $('<option>').val(sec.secid).text("Section " + sec.secname + "").appendTo('.ddlSection2');
+                        });
+
+                        $(".ddlSection2").prop('disabled', false);
+                    }
+                    else {
+                        $(".ddlSection2").prop('disabled', true);
+                    }
+                },
+                error: function (response) {
+                    Swal.fire("Oops", "error occured !", "error");
+                    console.log(response.responseText);
+                    return false;
+                },
+                complete: function () {
+                    $(".loader").hide();
+                }
+            });
+            return apiStatus;
+        }
+
+        function LoadSubjects() {
+            $.ajax({
+                url: apiUrl + "/Admin/GetSubjectList",
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: '',
+                beforeSend: function () {
+                    $(".loader").show();
+                },
+                success: function (response) {
+                    $(".ddlSubject2").empty();
+                    if (response.length > 0) {
+                        $(".ddlSubject2").append("<option value='-1'></option>");
+                        $.each(response, function (index, sub) {
+                            $('<option>').val(sub.Id).text(sub.SubjectName + " [" + sub.SubjectType + "]").appendTo('.ddlSubject2');
+                        }); 
+                    }
+                },
+                error: function (response) {
+                    Swal.fire("Oops", "error occured !", "error");
+                    console.log(response.responseText);
+                },
+                complete: function () {
+                    $(".loader").hide();
+                }
+            });
+        }
+
+        //For saving class timetable
+        function GetFieldsForSaveTimetable(op) {debugger
+            var _obj = {};
+            _obj.classId = $("#divAddTimetable .ddlClass2").val();
+            _obj.sectionId = $("#divAddTimetable .ddlSection2").val();
+            _obj.subjectId = $("#divAddTimetable .ddlSubject2").val();
+            var timeField = $('#divAddTimetable .imp div input');
+            var divElem = $("#divAddTimetable .imp");
+            var success = isValid(timeField, _obj);
+            if (success)
+            {
+                var objClassTimetable = {};
+                var config = [];
+                $.each(divElem, function (index, obj) {
+                    var item = {};
+                    var day = $(obj).find('.impfield');
+                    var stime = $(obj).find('.stime');
+                    var etime = $(obj).find('.etime');
+                    var room = $(obj).find('.room');
+
+                    if (day.length > 0)
+                        item.Day = day.text();
+                    if (stime.length > 0)
+                        item.StartTime = $(stime).val();
+                    if (etime.length > 0)
+                        item.EndTime = $(etime).val();
+                    if (room.length > 0)
+                        item.RoomNo = $(room).val();
+                    config.push(item);
+                });
+
+                objClassTimetable.ClassId = _obj.classId;
+                objClassTimetable.SectionId = _obj.sectionId;
+                objClassTimetable.SubjectId = _obj.subjectId;
+                objClassTimetable.ClassConfig = config;
+                objClassTimetable.InsertedBy = 0;
+                objClassTimetable.Operation = op;
+
+                CRUDClassTimetable(objClassTimetable)
+            }
+            else {
+                Alert("error", "Validation", "please fill mandatory fields");
+            }
+        }
+
+        function CRUDClassTimetable(objClassTimetable) {
+            var jsonData = JSON.stringify({ objClassTimetable });
+            $.ajax({
+                url: apiUrl + "/Admin/CRUDClassTimetable",
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: jsonData,
+                beforeSend: function () {
+                    $(".loader").show();
+                },
+                success: function (response) {debugger
+                    var className = $('#divAddTimetable .ddlClass2 option:selected')[0].text;
+                    var sectionName = $('#divAddTimetable .ddlSection2 option:selected')[0].text;
+                    var subjectName = $('#divAddTimetable .ddlSubject2 option:selected')[0].text;
+
+                    if (response != null && response.status == 1) {
+                        $("#divAddTimetable .imp div input").val("");
+                        if (op == 0) {
+                            $("#divAddTimetable").hide();
+                            $("#divShowTimetable").show();
+                            Alert("success", "Added!", "Timetable is added for " + className + "");
+                        }
+                        //for update
+                        else if (op == 1) {
+                            //$('#btnAdd').show();
+                            //$('#btnUpdate').hide();
+                            //$('#btnCancel').hide();
+                            Alert("success", "Updated!", "Timetable is updated for " + className + "");
+                        }
+                    }
+                    else if (response.status == 0) {
+                        Swal.fire("Alert!", "Timetable record already exist for " + className + " " + sectionName + " " + subjectName + "", "error");
+                    }
+                    else {
+                        Swal.fire("Oops", "Something went wrong!", "error");
+                    }
+                },
+                error: function (response) {
+                    Swal.fire("Oops", "error occured !", "error");
+                    console.log(response.responseText);
+                },
+                complete: function () {
+                    $(".loader").hide();
+                }
+            });
+        }
+
+        function isValid(timeField, _obj)
+        {
+            var result = true;
+            $.each(timeField, function (index, obj) {
+                if ($(obj).val() == "") {
+                    result = false;
+                    return result;
+                }
+            });
+
+            if (_obj.classId == "-1" || _obj.sectionId == "-1" || _obj.subjectId == "-1")
+                result = false;
+
+            return result;
+        }
     </script>
 </body>
 </html>
